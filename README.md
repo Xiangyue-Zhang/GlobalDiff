@@ -9,7 +9,8 @@
 <p align="center">
   <strong>✨AAAI 2026✨</strong>
 </p>
----
+
+<a href='https://arxiv.org/abs/2511.10076'><img src='https://img.shields.io/badge/ArXiv-2511.10076-red'></a> <a href='https://xiangyue-zhang.github.io/GlobalDiff/'><img src='https://img.shields.io/badge/Project-Page-purple'></a>
 
 GlobalDiff is developed by Alibaba Cloud and released under the **Apache License 2.0**.
 
