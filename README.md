@@ -27,6 +27,8 @@ GlobalDiff is developed by Alibaba Cloud and released under the **Apache License
 
 If you would like to compare your paper’s results with GlobalDiff but find it too difficult to run the repository, you can simply download the test `.npz` file. Results for **person-2** are provided in `best_pid_2.zip`.
 
+If you want to compare your results with our method, you could just simply download [all test results](https://drive.google.com/file/d/1FT5JyPKiHSimpy4imusYLs_Haq4JSd3o/view?usp=drive_link) without reproducing the codes.
+
 ## Download Data
 
 please refer to [EMAGE](https://github.com/PantoMatrix/PantoMatrix/tree/main) and download datasets from [BEAT2](https://huggingface.co/datasets/H-Liu1997/BEAT2) for datasets.
