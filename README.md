@@ -23,6 +23,14 @@ GlobalDiff is developed by Alibaba Cloud and released under the **Apache License
 
 ---
 
+# 💖 Inference Data
+
+If you would like to compare your paper’s results with GlobalDiff but find it too difficult to run the repository, you can simply download the test `.npz` file. Results for **person-2** are provided in `best_pid_2.zip`.
+
+If you want to compare your results with our method, you could just simply download [all test results](https://drive.google.com/file/d/1FT5JyPKiHSimpy4imusYLs_Haq4JSd3o/view?usp=drive_link) without reproducing the codes.
+
+---
+
 # 🛠️ Environment Setup
 
 The repository currently does not ship a frozen `requirements.txt`, so we recommend preparing the environment explicitly before data preprocessing, training, or inference.
@@ -81,14 +89,6 @@ After finishing the environment setup, make sure the following are ready before 
 - `Scripts/VAE/ckpt/split/global/MaskedVAE2-HorizonFlip/best.pt` exists
 - `Scripts/VAE/ckpt/split/global/MaskedVAE3-HorizonFlip/best.pt` exists
 - `Scripts/FM/ckpt/split/SimpleSpeechModel/best.pt` is available after unzipping `best.zip`
-
----
-
-# 💖 Inference Data
-
-If you would like to compare your paper’s results with GlobalDiff but find it too difficult to run the repository, you can simply download the test `.npz` file. Results for **person-2** are provided in `best_pid_2.zip`.
-
-If you want to compare your results with our method, you could just simply download [all test results](https://drive.google.com/file/d/1FT5JyPKiHSimpy4imusYLs_Haq4JSd3o/view?usp=drive_link) without reproducing the codes.
 
 ## Download Data
 
