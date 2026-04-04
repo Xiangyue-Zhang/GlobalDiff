@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 '''
 
+import os
+
+DEFAULT_WAVLM_MODEL = "patrickvonplaten/wavlm-libri-clean-100h-large"
+
 MODEL_NAMES={
-    "wavlm": "/mnt/4TDisk/mm_data/mm/huggingface/patrickvonplaten/wavlm-libri-clean-100h-large",
+    "wavlm": os.environ.get("GLOBALDIFF_WAVLM_PATH", DEFAULT_WAVLM_MODEL),
 }

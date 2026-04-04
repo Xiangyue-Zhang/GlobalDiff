@@ -23,6 +23,67 @@ GlobalDiff is developed by Alibaba Cloud and released under the **Apache License
 
 ---
 
+# 🛠️ Environment Setup
+
+The repository currently does not ship a frozen `requirements.txt`, so we recommend preparing the environment explicitly before data preprocessing, training, or inference.
+
+## Recommended Setup
+
+- OS: Linux
+- Python: 3.10
+- CUDA: 11.8 or a version compatible with your local PyTorch build
+- GPU: at least 1 NVIDIA GPU for inference, 4 GPUs are recommended for the training command used below
+
+Create a conda environment:
+
+```shell
+conda create -n globaldiff python=3.10 -y
+conda activate globaldiff
+```
+
+Install PyTorch first. Please choose the command that matches your CUDA version from the official PyTorch website. For CUDA 11.8, you can use:
+
+```shell
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+```
+
+Then install the Python dependencies used by this repository:
+
+```shell
+pip install numpy scipy pandas librosa soundfile lmdb tqdm einops tensorboard smplx transformers diffusers positional-encodings
+```
+
+## External Resources
+
+GlobalDiff also relies on two external resources:
+
+1. **SMPL-X model file**  
+   Download `SMPLX_NEUTRAL_2020.npz` from the official SMPL-X release, then either:
+   - place it at `Data/SMPLX_NEUTRAL_2020.npz`, or
+   - set `GLOBALDIFF_SMPLX_MODEL_PATH` to its absolute path
+
+2. **WavLM checkpoint**  
+   By default, the code now uses the Hugging Face model id `patrickvonplaten/wavlm-libri-clean-100h-large`.  
+   If you already have the model cached locally, you can point the code to that directory with:
+
+```shell
+export GLOBALDIFF_SMPLX_MODEL_PATH=/path/to/SMPLX_NEUTRAL_2020.npz
+export GLOBALDIFF_WAVLM_PATH=/path/to/wavlm-libri-clean-100h-large
+```
+
+If you do not set `GLOBALDIFF_WAVLM_PATH`, Transformers will download the model automatically from Hugging Face the first time it is used.
+
+## Quick Check
+
+After finishing the environment setup, make sure the following are ready before training or inference:
+
+- `Data/BEAT2/create_lmdb.py` can access your downloaded BEAT2 data
+- `Scripts/VAE/ckpt/split/global/MaskedVAE2-HorizonFlip/best.pt` exists
+- `Scripts/VAE/ckpt/split/global/MaskedVAE3-HorizonFlip/best.pt` exists
+- `Scripts/FM/ckpt/split/SimpleSpeechModel/best.pt` is available after unzipping `best.zip`
+
+---
+
 # 💖 Inference Data
 
 If you would like to compare your paper’s results with GlobalDiff but find it too difficult to run the repository, you can simply download the test `.npz` file. Results for **person-2** are provided in `best_pid_2.zip`.

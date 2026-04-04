@@ -14,13 +14,39 @@ See the License for the specific language governing permissions and
 limitations under the License.
 '''
 
+import os
+
 import smplx
 import numpy as np
 import torch
 from typing import Optional, Dict
 
 from Util import *
-def GetSMPLXModel(model_folder="/mnt/4TDisk/mm_data/mm/project/LargeMotionModel/Data/SMPLX_NEUTRAL_2020.npz"):
+
+def _resolve_smplx_model_path(model_folder: Optional[str] = None):
+    if model_folder is not None:
+        return model_folder
+
+    env_path = os.environ.get("GLOBALDIFF_SMPLX_MODEL_PATH")
+    if env_path:
+        return env_path
+
+    candidate_paths = [
+        "/mnt/4TDisk/mm_data/mm/project/LargeMotionModel/Data/SMPLX_NEUTRAL_2020.npz",
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Data", "SMPLX_NEUTRAL_2020.npz")),
+    ]
+    for path in candidate_paths:
+        if os.path.exists(path):
+            return path
+
+    raise FileNotFoundError(
+        "SMPL-X model file not found. Set GLOBALDIFF_SMPLX_MODEL_PATH "
+        "or place SMPLX_NEUTRAL_2020.npz under Data/."
+    )
+
+
+def GetSMPLXModel(model_folder: Optional[str] = None):
+    model_folder = _resolve_smplx_model_path(model_folder)
     model = smplx.create(model_folder, 
                          model_type="smplx",
                          gender="neutral", 
