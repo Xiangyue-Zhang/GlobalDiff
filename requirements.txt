@@ -1,0 +1,17 @@
+# Install PyTorch separately so you can match your local CUDA version.
+# Example for CUDA 11.8:
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+numpy
+scipy
+pandas
+librosa
+soundfile
+lmdb
+tqdm
+einops
+tensorboard
+smplx
+transformers
+diffusers
+positional-encodings

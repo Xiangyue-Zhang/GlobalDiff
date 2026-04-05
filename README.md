@@ -31,9 +31,36 @@ If you want to compare your results with our method, you could just simply downl
 
 ---
 
+# ⚡ Quick Start
+
+GlobalDiff now includes two helper entrypoints:
+
+- `python tools/check_env.py`: verify whether your local environment is ready
+- `python tools/run.py ...`: unified commands for preprocessing, training, and inference
+
+The fastest path to a runnable setup is:
+
+```shell
+conda create -n globaldiff python=3.10 -y
+conda activate globaldiff
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip install -r requirements.txt
+python tools/check_env.py
+```
+
+If you already have BEAT2 and the required checkpoints prepared, you can run inference with:
+
+```shell
+python tools/run.py infer \
+  ckpt/split/DiffusionDITNetPartsFixedExpressions2PostNorm_LL_split_HorizonFlip_MaskedVAE3_W02_BoneDirLoss \
+  --data-root /path/to/beat_v2.0.0/beat_english_v2.0.0
+```
+
+---
+
 # 🛠️ Environment Setup
 
-The repository currently does not ship a frozen `requirements.txt`, so we recommend preparing the environment explicitly before data preprocessing, training, or inference.
+The repository now provides a lightweight `requirements.txt`, a unified CLI under `tools/run.py`, and an environment checker under `tools/check_env.py` to make the project easier to reproduce.
 
 ## Recommended Setup
 
@@ -55,10 +82,10 @@ Install PyTorch first. Please choose the command that matches your CUDA version 
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 ```
 
-Then install the Python dependencies used by this repository:
+Then install the remaining Python dependencies:
 
 ```shell
-pip install numpy scipy pandas librosa soundfile lmdb tqdm einops tensorboard smplx transformers diffusers positional-encodings
+pip install -r requirements.txt
 ```
 
 ## External Resources
@@ -83,7 +110,21 @@ If you do not set `GLOBALDIFF_WAVLM_PATH`, Transformers will download the model 
 
 ## Quick Check
 
-After finishing the environment setup, make sure the following are ready before training or inference:
+You can run:
+
+```shell
+python tools/check_env.py
+```
+
+or, if you want to verify the BEAT2 path as well:
+
+```shell
+python tools/check_env.py --data-root /path/to/beat_v2.0.0/beat_english_v2.0.0
+```
+
+The checker validates Python, core packages, PyTorch/CUDA, SMPL-X, WavLM source, and required checkpoints.
+
+Before training or inference, make sure the following are ready:
 
 - `Data/BEAT2/create_lmdb.py` can access your downloaded BEAT2 data
 - `Scripts/VAE/ckpt/split/global/MaskedVAE2-HorizonFlip/best.pt` exists
@@ -102,20 +143,18 @@ huggingface-cli download --repo-type dataset --resume-download H-Liu1997/BEAT2 -
 
 ## 1) Create Training Data
 
-Go to `Data/BEAT2`, then run:
+Create LMDB with the helper CLI:
 
 ```shell
-cd Data/BEAT2
+python tools/run.py preprocess-lmdb /path/to/beat_v2.0.0/beat_english_v2.0.0 --split train
 ```
 
-Create LMDB:
-```shell
-    python create_lmdb.py path_to_folder/beat_v2.0.0/beat_english_v2.0.0/
-```
 This may take a while. Then extract HuBERT features:
+
 ```shell
-    python create_hubert.py train_seq_size_60_stride_size_20_global.lmdb
+python tools/run.py preprocess-wavlm Data/BEAT2/train_seq_size_60_stride_size_20_global.lmdb
 ```
+
 This takes about **1 hour**.
 
 You will get two folders:
@@ -131,17 +170,25 @@ Unzip `best.zip` to:
 -    `Scripts/FM/ckpt/split/SimpleSpeechModel/`
 
 Then run training:
+
 ```shell
-    cd Scripts/FM
-    torchrun --nproc_per_node=4 TrainFixedExpressions.py
+python tools/run.py train-fm --nproc-per-node 4
 ```
+
+If you need custom arguments, append them after `--`, for example:
+
+```shell
+python tools/run.py train-fm --nproc-per-node 4 -- --batch_size 64 --epoch 500
+```
+
 ---
 
 ## 3) Inference
+
 ```shell
-    python Test_FixedExpressions_pid_batch.py \
-      ckpt/split/DiffusionDITNetPartsFixedExpressions2PostNorm_LL_split_HorizonFlip_MaskedVAE3_W02_BoneDirLoss \
-      --data_root=path_to_folder/beat_v2.0.0/beat_english_v2.0.0/
+python tools/run.py infer \
+  ckpt/split/DiffusionDITNetPartsFixedExpressions2PostNorm_LL_split_HorizonFlip_MaskedVAE3_W02_BoneDirLoss \
+  --data-root /path/to/beat_v2.0.0/beat_english_v2.0.0
 ```
 This will run **all checkpoints sequentially**. The FID record is saved to:
 
@@ -156,9 +203,14 @@ The results with the best FID are saved to:
 > - EMAGE: https://pantomatrix.github.io/EMAGE/
 > - SemTalk: https://github.com/Xiangyue-Zhang/SemTalk
 
+## 4) Legacy Scripts
+
+The original research scripts are still preserved under `Data/BEAT2`, `Scripts/VAE`, and `Scripts/FM`.
+If you prefer the old workflow, you can still call them directly. The new `tools/run.py` wrapper is only a convenience layer for easier reproduction.
+
 ---
 
-## 4) 📺 Visualization
+## 5) 📺 Visualization
 
 Following [EMAGE](https://github.com/PantoMatrix/PantoMatrix), you can download [SMPLX blender addon](https://huggingface.co/datasets/H-Liu1997/BEAT2_Tools/blob/main/smplx_blender_addon_20230921.zip), and install it in your blender 3.x or 4.x. Click the button Add Animation to visualize the generated smplx file (like xxx.npz).
 
