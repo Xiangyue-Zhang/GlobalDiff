@@ -10,7 +10,11 @@
   <strong>✨AAAI 2026✨</strong>
 </p>
 
-<a href='https://arxiv.org/abs/2511.10076'><img src='https://img.shields.io/badge/ArXiv-2511.10076-red'></a> <a href='https://xiangyue-zhang.github.io/GlobalDiff/'><img src='https://img.shields.io/badge/Project-Page-purple'></a>
+<a href='https://arxiv.org/abs/2511.10076'><img src='https://img.shields.io/badge/ArXiv-2511.10076-red'></a> <a href='https://huggingface.co/papers/2511.10076'><img src='https://img.shields.io/badge/Hugging_Face-Paper-yellow'></a> <a href='https://xiangyuezhang.com/GlobalDiff/'><img src='https://img.shields.io/badge/Project-Page-purple'></a> <a href='https://huggingface.co/X-Zhang/GlobalDiff'><img src='https://img.shields.io/badge/%F0%9F%A4%97-Model_Weights-yellow'></a> <a href='https://huggingface.co/datasets/X-Zhang/GlobalDiff-Inference-Data'><img src='https://img.shields.io/badge/%F0%9F%A4%97-Inference_Data-yellow'></a>
+
+<p><strong>Official implementation and checkpoints for long-horizon co-speech gesture generation with global rotation diffusion.</strong></p>
+
+<p><sub>Keywords: co-speech gesture generation, co-speech motion generation, speech-driven motion generation, diffusion models, global rotation, long-horizon generation, BEAT2, and SMPL-X.</sub></p>
 
 GlobalDiff is developed by Alibaba Cloud and released under the **Apache License 2.0**.
 
@@ -27,7 +31,20 @@ GlobalDiff is developed by Alibaba Cloud and released under the **Apache License
 
 If you would like to compare your paper’s results with GlobalDiff but find it too difficult to run the repository, you can simply download the test `.npz` file. Results for **person-2** are provided in `best_pid_2.zip`.
 
-If you want to compare your results with our method, you could just simply download [all test results](https://drive.google.com/file/d/1FT5JyPKiHSimpy4imusYLs_Haq4JSd3o/view?usp=drive_link) without reproducing the codes.
+Download the generated test results from
+[Hugging Face](https://huggingface.co/datasets/X-Zhang/GlobalDiff-Inference-Data/resolve/main/best_pid_2.zip)
+or the original [Google Drive mirror](https://drive.google.com/file/d/1FT5JyPKiHSimpy4imusYLs_Haq4JSd3o/view?usp=drive_link)
+without reproducing the code.
+
+---
+
+# 🤗 Model Weights
+
+The official checkpoints are mirrored in the
+[GlobalDiff Hugging Face repository](https://huggingface.co/X-Zhang/GlobalDiff).
+It preserves the repository-relative paths for the global-rotation VAEs,
+speech model, and evaluation representation asset. See the model card for the
+complete file list and SHA-256 verification instructions.
 
 ---
 

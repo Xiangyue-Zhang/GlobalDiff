@@ -1,0 +1,45 @@
+cff-version: 1.2.0
+message: "If you use GlobalDiff, please cite the AAAI 2026 paper."
+title: "GlobalDiff: Official Implementation"
+type: software
+authors:
+  - family-names: Zhang
+    given-names: Xiangyue
+  - family-names: Li
+    given-names: Jianfang
+  - family-names: Ren
+    given-names: Jianqiang
+  - family-names: Zhang
+    given-names: Jiaxu
+repository-code: "https://github.com/Xiangyue-Zhang/GlobalDiff"
+url: "https://xiangyuezhang.com/GlobalDiff/"
+abstract: "Official code and checkpoints for long-horizon co-speech gesture generation with global rotation diffusion and multi-level constraints."
+keywords:
+  - co-speech gesture generation
+  - co-speech motion generation
+  - speech-driven motion generation
+  - diffusion models
+  - global rotation
+  - long-horizon generation
+  - BEAT2
+  - SMPL-X
+preferred-citation:
+  type: conference-paper
+  title: "Mitigating Error Accumulation in Co-Speech Motion Generation via Global Rotation Diffusion and Multi-Level Constraints"
+  authors:
+    - family-names: Zhang
+      given-names: Xiangyue
+    - family-names: Li
+      given-names: Jianfang
+    - family-names: Ren
+      given-names: Jianqiang
+    - family-names: Zhang
+      given-names: Jiaxu
+  collection-title: "Proceedings of the AAAI Conference on Artificial Intelligence"
+  volume: 40
+  issue: 15
+  year: 2026
+  start: 12834
+  end: 12842
+  doi: "10.1609/aaai.v40i15.38281"
+  url: "https://arxiv.org/abs/2511.10076"
