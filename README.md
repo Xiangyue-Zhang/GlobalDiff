@@ -10,7 +10,7 @@
   <strong>✨AAAI 2026✨</strong>
 </p>
 
-<a href='https://arxiv.org/abs/2511.10076'><img src='https://img.shields.io/badge/ArXiv-2511.10076-red'></a> <a href='https://huggingface.co/papers/2511.10076'><img src='https://img.shields.io/badge/Hugging_Face-Paper-yellow'></a> <a href='https://xiangyuezhang.com/GlobalDiff/'><img src='https://img.shields.io/badge/Project-Page-purple'></a> <a href='https://huggingface.co/X-Zhang/GlobalDiff'><img src='https://img.shields.io/badge/%F0%9F%A4%97-Model_Weights-yellow'></a> <a href='https://huggingface.co/datasets/X-Zhang/GlobalDiff-Inference-Data'><img src='https://img.shields.io/badge/%F0%9F%A4%97-Inference_Data-yellow'></a>
+<a href='https://arxiv.org/abs/2511.10076'><img src='https://img.shields.io/badge/ArXiv-2511.10076-red'></a> <a href='https://huggingface.co/papers/2511.10076'><img src='https://img.shields.io/badge/Hugging_Face-Paper-yellow'></a> <a href='https://xiangyuezhang.com/GlobalDiff/'><img src='https://img.shields.io/badge/Project-Page-purple'></a> <a href='https://huggingface.co/X-Zhang/GlobalDiff'><img src='https://img.shields.io/badge/%F0%9F%A4%97-Model_Weights-yellow'></a> <a href='https://huggingface.co/datasets/X-Zhang/GlobalDiff-Inference-Data/resolve/main/best_pid_2.zip'><img src='https://img.shields.io/badge/%F0%9F%A4%97-Speaker_2_Data-yellow'></a> <a href='https://drive.google.com/file/d/1FT5JyPKiHSimpy4imusYLs_Haq4JSd3o/view?usp=drive_link'><img src='https://img.shields.io/badge/Google_Drive-All_Speakers_Data-blue'></a>
 
 <p><strong>Official implementation and checkpoints for long-horizon co-speech gesture generation with global rotation diffusion.</strong></p>
 
@@ -29,12 +29,14 @@ GlobalDiff is developed by Alibaba Cloud and released under the **Apache License
 
 # 💖 Inference Data
 
-If you would like to compare your paper’s results with GlobalDiff but find it too difficult to run the repository, you can simply download the test `.npz` file. Results for **person-2** are provided in `best_pid_2.zip`.
+To compare against GlobalDiff without rerunning inference, download the generated test `.npz` files for the BEAT2 protocol used by your experiment:
 
-Download the generated test results from
-[Hugging Face](https://huggingface.co/datasets/X-Zhang/GlobalDiff-Inference-Data/resolve/main/best_pid_2.zip)
-or the original [Google Drive mirror](https://drive.google.com/file/d/1FT5JyPKiHSimpy4imusYLs_Haq4JSd3o/view?usp=drive_link)
-without reproducing the code.
+| Evaluation setting | Coverage | Download |
+| --- | --- | --- |
+| **Speaker 2 (paper protocol)** | BEAT2 person ID 2 | [Hugging Face (`best_pid_2.zip`)](https://huggingface.co/datasets/X-Zhang/GlobalDiff-Inference-Data/resolve/main/best_pid_2.zip) |
+| **All Speakers** | BEAT2 25-English-speaker setting | [Google Drive](https://drive.google.com/file/d/1FT5JyPKiHSimpy4imusYLs_Haq4JSd3o/view?usp=drive_link) |
+
+Please select the archive that matches your evaluation setting. The Speaker 2 and All-Speakers results use different training and evaluation protocols, so they should not be interpreted as a controlled single-speaker versus multi-speaker ablation.
 
 ---
 
@@ -200,7 +202,9 @@ python tools/run.py train-fm --nproc-per-node 4 -- --batch_size 64 --epoch 500
 
 ---
 
-## 3) Inference
+## 3) Inference (Speaker 2 Paper Protocol)
+
+The command below reproduces the Speaker 2 evaluation workflow. If you only need generated outputs, or if you are evaluating the 25-English-speaker setting, use the corresponding archive in [Inference Data](#-inference-data).
 
 ```shell
 python tools/run.py infer \
