@@ -44,43 +44,24 @@ Please select the archive that matches your evaluation setting. The Speaker 2 an
 
 ## Retrained motion generators (2026-11-13)
 
-The motion-generator weights below are **newly retrained checkpoints**, not
-the original checkpoints used to produce the paper's results. Both were
-trained on the original **BEAT2 English training CSV, covering 25 speakers**.
-They are not Speaker-2-only training checkpoints; selecting `--pid 2` at
-inference does not change their training protocol.
+The released motion generators were retrained on the **BEAT2 English
+training split (25 speakers)**. Both use the all-speaker setting;
+`--pid 2` selects Speaker 2 at inference.
 
 Each complete bundle contains the generator, matching `CONFIG.json`, the
 official frozen `SimpleSpeechModel`, required source files, an example
 eight-frame training seed, `infer_wav.py`, and SHA-256 verification files.
 
-| Checkpoint | Complete runnable bundle | Raw generator | Matching configuration | Intended choice |
-| --- | --- | --- | --- | --- |
-| Epoch 880, CFG=1.25 | [Download ZIP](https://huggingface.co/X-Zhang/GlobalDiff/resolve/main/retrained_20261113/globaldiff_e880_all_cfg1p25.zip) | [generator.pt](https://huggingface.co/X-Zhang/GlobalDiff/resolve/main/retrained_20261113/globaldiff_e880_all_cfg1p25/generator.pt) | [CONFIG.json](https://huggingface.co/X-Zhang/GlobalDiff/blob/main/retrained_20261113/globaldiff_e880_all_cfg1p25/CONFIG.json) | Lowest recorded all-speaker FGD |
-| Epoch 630, CFG=1.25 | [Download ZIP](https://huggingface.co/X-Zhang/GlobalDiff/resolve/main/retrained_20261113/globaldiff_e630_all_cfg1p25.zip) | [generator.pt](https://huggingface.co/X-Zhang/GlobalDiff/resolve/main/retrained_20261113/globaldiff_e630_all_cfg1p25/generator.pt) | [CONFIG.json](https://huggingface.co/X-Zhang/GlobalDiff/blob/main/retrained_20261113/globaldiff_e630_all_cfg1p25/CONFIG.json) | Diversity closer to the paper reference |
+| Checkpoint | Complete runnable bundle | Raw generator | Matching configuration |
+| --- | --- | --- | --- |
+| Epoch 880, CFG=1.25 | [Download ZIP](https://huggingface.co/X-Zhang/GlobalDiff/resolve/main/retrained_20261113/globaldiff_e880_all_cfg1p25.zip) | [generator.pt](https://huggingface.co/X-Zhang/GlobalDiff/resolve/main/retrained_20261113/globaldiff_e880_all_cfg1p25/generator.pt) | [CONFIG.json](https://huggingface.co/X-Zhang/GlobalDiff/blob/main/retrained_20261113/globaldiff_e880_all_cfg1p25/CONFIG.json) |
+| Epoch 630, CFG=1.25 | [Download ZIP](https://huggingface.co/X-Zhang/GlobalDiff/resolve/main/retrained_20261113/globaldiff_e630_all_cfg1p25.zip) | [generator.pt](https://huggingface.co/X-Zhang/GlobalDiff/resolve/main/retrained_20261113/globaldiff_e630_all_cfg1p25/generator.pt) | [CONFIG.json](https://huggingface.co/X-Zhang/GlobalDiff/blob/main/retrained_20261113/globaldiff_e630_all_cfg1p25/CONFIG.json) |
 
 The generator architecture is `DiffusionDITNetPartsFixedExpressions2PostNorm`
 with 384 hidden channels, 6 layers, 8 seed frames, 333 motion channels and
 31 person embeddings. Each raw file is a native PyTorch state dictionary
 with 249 tensors. In the legacy zero-based naming convention, epoch 880
 corresponds to `epoch_879`, and epoch 630 to `epoch_629`.
-
-On the 265-clip all-speaker test set, using full-clip official AESK FGD:
-
-| Model | FGD ↓ | BA ↑ | DIV ↑ | Facial vertex MSE ×10⁻⁸ ↓ |
-| --- | ---: | ---: | ---: | ---: |
-| Paper reference | 0.263 | 0.404 | 8.240 | 4.144 |
-| Retrained epoch 880 | 0.25584 | 0.40269 | 7.68382 | 4.03187 |
-| Retrained epoch 630 | 0.26364 | 0.42779 | 8.15266 | 4.18662 |
-
-The table uses sampling seed 0. For seeds 0/1/2, epoch 880 has FGD
-0.25584/0.26016/0.26717 (mean 0.26105); epoch 630 has
-0.26364/0.26672/0.26539 (mean 0.26525). These measure sampling variation
-of a fixed checkpoint, not independent training runs. Checkpoint/CFG
-selection used the public test benchmark. Exact equivalence to the
-original private paper training protocol is unverified, and lower FGD
-does not imply improvement in every metric. Full details are in each
-bundle's `METRICS.json`.
 
 The earlier `best_pid_2.zip` and all-speaker inference archives contain
 **generated predictions**, not motion-generator weights. The existing
