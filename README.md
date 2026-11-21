@@ -29,14 +29,14 @@ GlobalDiff is developed by Alibaba Cloud and released under the **Apache License
 
 # 💖 Inference Data
 
-To compare against GlobalDiff without rerunning inference, download the generated test `.npz` files for the BEAT2 protocol used by your experiment:
+Compare GlobalDiff on BEAT2 without rerunning generation. Each download includes predictions and matched ground-truth motion at 30 fps.
 
-| Evaluation setting | Coverage | Download |
-| --- | --- | --- |
-| **Speaker 2 (paper protocol)** | BEAT2 person ID 2 | [Hugging Face (`best_pid_2.zip`)](https://huggingface.co/datasets/X-Zhang/GlobalDiff-Inference-Data/resolve/main/best_pid_2.zip) |
-| **All Speakers** | BEAT2 25-English-speaker setting | [Google Drive](https://drive.google.com/file/d/1FT5JyPKiHSimpy4imusYLs_Haq4JSd3o/view?usp=drive_link) |
+| BEAT2 protocol | Prediction / GT pairs | Download |
+| --- | ---: | --- |
+| Speaker 2 (Scott) | 15 | [Predictions and ground truth](https://huggingface.co/datasets/X-Zhang/GlobalDiff-Inference-Data/resolve/main/GlobalDiff_speaker2_predictions_and_gt.zip) |
+| 25 English speakers | 265 | [Predictions and ground truth](https://huggingface.co/datasets/X-Zhang/GlobalDiff-Inference-Data/resolve/main/GlobalDiff_25speakers_predictions_and_gt.zip) |
 
-Please select the archive that matches your evaluation setting. The Speaker 2 and All-Speakers results use different training and evaluation protocols, so they should not be interpreted as a controlled single-speaker versus multi-speaker ablation.
+The ZIPs contain `predictions/res_<id>.npz`, `ground_truth/<id>.npz` and `pairs.csv` with frame counts and hashes. For frame-wise metrics, use the common duration. One of 15 Speaker 2 predictions and 35 of 265 all-speaker predictions extend beyond the reference. The maximum excess is 302 frames. The predictions are identical to the original [Speaker 2 ZIP](https://huggingface.co/datasets/X-Zhang/GlobalDiff-Inference-Data/resolve/main/best_pid_2.zip) and [25-speaker archive](https://drive.google.com/file/d/1FT5JyPKiHSimpy4imusYLs_Haq4JSd3o/view).
 
 ---
 
@@ -322,12 +322,22 @@ Following [EMAGE](https://github.com/PantoMatrix/PantoMatrix), you can download 
 Thanks to [EMAGE](https://github.com/PantoMatrix/PantoMatrix/tree/main/scripts/EMAGE_2024), [SemTalk](https://github.com/Xiangyue-Zhang/SemTalk), our code is partially borrowing from them. Please check these useful repos.
 
 ## 📚 Citation
-If you find our code or paper helps, please consider citing:
+
+The AAAI 2026 proceedings DOI is [10.1609/aaai.v40i15.38281](https://doi.org/10.1609/aaai.v40i15.38281).
+
 ```bibtex
-    @article{zhang2025mitigating,
-      title={Mitigating Error Accumulation in Co-Speech Motion Generation via Global Rotation Diffusion and Multi-Level Constraints},
-      author={Zhang, Xiangyue and Li, Jianfang and Ren, Jianqiang and Zhang, Jiaxu},
-      journal={arXiv preprint arXiv:2511.10076},
-      year={2025}
-    }
+@article{zhang2026globaldiff,
+  title={Mitigating Error Accumulation in Co-Speech Motion Generation via Global Rotation Diffusion and Multi-Level Constraints},
+  author={Zhang, Xiangyue and Li, Jianfang and Ren, Jianqiang and Zhang, Jiaxu},
+  journal={Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume={40},
+  number={15},
+  pages={12834--12842},
+  year={2026},
+  doi={10.1609/aaai.v40i15.38281}
+}
 ```
+
+## Positioning and Related Work
+
+GlobalDiff addresses error propagation along the kinematic chain in co-speech gesture generation. It predicts global joint rotations and constrains joint orientation, bone angles and temporal motion. These choices matter when evaluating hand or foot errors at the ends of the skeleton. [EMAGE](https://arxiv.org/abs/2401.00374) learns holistic motion through generation and masked reconstruction. [GestureLSM](https://arxiv.org/abs/2501.18898) models interactions between body regions and accelerates flow-matching inference with latent shortcuts. The [paired BEAT2 downloads](#-inference-data) provide a common set of clip IDs for comparisons.
